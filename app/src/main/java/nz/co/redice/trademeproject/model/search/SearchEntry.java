@@ -1,10 +1,10 @@
 
-package nz.co.redice.trademeproject.model.search.rental;
+package nz.co.redice.trademeproject.model.search;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Property {
+public class SearchEntry {
 
     @SerializedName("ListingId")
     @Expose
@@ -131,7 +131,7 @@ public class Property {
     /**
      * No args constructor for use in serialization
      */
-    public Property() {
+    public SearchEntry() {
     }
 
     /**
@@ -176,16 +176,16 @@ public class Property {
      * @param region
      * @param startDate
      */
-    public Property(long listingId, String title, String category, long startPrice, String startDate,
-                    String endDate, Object listingLength, boolean hasGallery, String asAt, String categoryPath,
-                    String pictureHref, long regionId, String region, long suburbId, String suburb,
-                    String noteDate, long reserveState, boolean isClassified, java.util.List<Object> openHomes,
-                    String priceDisplay, java.util.List<String> photoUrls, long memberId, String address,
-                    String district, String agencyReference, String availableFrom, long bathrooms,
-                    long bedrooms, String listingGroup, String parking, String propertyType,
-                    long rentPerWeek, java.util.List<String> adjacentSuburbNames,
-                    java.util.List<Long> adjacentSuburbIds, long districtId, long petsOkay, long smokersOkay,
-                    String whiteware, long maxTenants, String propertyId) {
+    public SearchEntry(long listingId, String title, String category, long startPrice, String startDate,
+                       String endDate, Object listingLength, boolean hasGallery, String asAt, String categoryPath,
+                       String pictureHref, long regionId, String region, long suburbId, String suburb,
+                       String noteDate, long reserveState, boolean isClassified, java.util.List<Object> openHomes,
+                       String priceDisplay, java.util.List<String> photoUrls, long memberId, String address,
+                       String district, String agencyReference, String availableFrom, long bathrooms,
+                       long bedrooms, String listingGroup, String parking, String propertyType,
+                       long rentPerWeek, java.util.List<String> adjacentSuburbNames,
+                       java.util.List<Long> adjacentSuburbIds, long districtId, long petsOkay, long smokersOkay,
+                       String whiteware, long maxTenants, String propertyId) {
         super();
         this.listingId = listingId;
         this.title = title;

@@ -2,7 +2,7 @@ package nz.co.redice.trademeproject.networkservices.client;
 
 import java.util.Map;
 
-import nz.co.redice.trademeproject.model.search.rental.Properties;
+import nz.co.redice.trademeproject.model.search.SearchResult;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -29,7 +29,7 @@ public interface TradeMeApi {
     );
 
     @GET("Search/Property/Rental.json")
-    Call<Properties> getSearchResults(
+    Call<SearchResult> getSearchResults(
             @Header("Authorization") String param,
             @QueryMap Map<String, String> map
     );

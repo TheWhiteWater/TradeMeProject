@@ -1,12 +1,10 @@
-package nz.co.redice.trademeproject.model.search.rental;
+package nz.co.redice.trademeproject.model.search;
 
 import java.util.Map;
 
 public class SearchFilter {
 
-
     Map <String, String> queryParameters;
-
 
     public Map<String, String> getQueryParameters() {
         return queryParameters;

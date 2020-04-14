@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 import nz.co.redice.trademeproject.AuthActivity;
-import nz.co.redice.trademeproject.model.search.rental.Properties;
-import nz.co.redice.trademeproject.model.search.rental.Property;
+import nz.co.redice.trademeproject.model.search.SearchResult;
+import nz.co.redice.trademeproject.model.search.SearchEntry;
 import nz.co.redice.trademeproject.networkservices.client.TradeMeApi;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,12 +36,12 @@ public class SearchService {
                 .build()
                 .create(TradeMeApi.class);
         authorizationHeader = getAuthHeader();
-        if (authorizationHeader.isEmpty() || authorizationHeader == null)
+        if (authorizationHeader.isEmpty())
             launchReAuthentication();
     }
 
     /**
-     * This method KILLS THE CURRENT SCREEN and (re)launches authentication process due to
+     * This method KILLS THE CURRENT SCREEN for (re)launches authentication process due to
      * A) request header absence situation {@link #} or B) 401 code (authentication failure )
      * response.  DON"T FORGET TO SAVE YOUR STATE !!!
      */
@@ -57,24 +57,24 @@ public class SearchService {
     }
 
 
-    private List<Property> getSearchResults(Map<String, String> searchParameters) {
-        List<Property> searchResults = new ArrayList<>();
+    private List<SearchEntry> getSearchResults(Map<String, String> searchParameters) {
+        List<SearchEntry> searchResults = new ArrayList<>();
         mTradeMeApi.getSearchResults(authorizationHeader, searchParameters)
-                .enqueue(new Callback<Properties>() {
+                .enqueue(new Callback<SearchResult>() {
                     @Override
-                    public void onResponse(Call<Properties> call, Response<Properties> response) {
+                    public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
                         Log.d("Logger", "onResponse: call.header " + call.request().header("Authorization"));
                         Log.d("Logger", "onResponse: response.code " + response.code());
                         Log.d("Logger", "onResponse: response.errorBody " + response.errorBody());
                         Log.d("Logger", "onResponse: response.raw " + response.raw());
                         if (response.body() != null) {
-                            searchResults.addAll(response.body().getPropertyList());
+                            searchResults.addAll(response.body().getSearchEntryList());
                         }
                         Log.d("Logger", "onResponse: response.SIZE " + searchResults.size());
                     }
 
                     @Override
-                    public void onFailure(Call<Properties> call, Throwable t) {
+                    public void onFailure(Call<SearchResult> call, Throwable t) {
                         Log.d("Logger", "onFailure: " + t.getMessage());
                         Log.d("Logger", "onFailure: " + t.toString());
                     }

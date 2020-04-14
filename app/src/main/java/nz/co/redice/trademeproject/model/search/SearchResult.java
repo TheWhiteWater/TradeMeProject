@@ -1,12 +1,12 @@
 
-package nz.co.redice.trademeproject.model.search.rental;
+package nz.co.redice.trademeproject.model.search;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Properties {
+public class SearchResult {
 
     @SerializedName("TotalCount")
     @Expose
@@ -19,7 +19,7 @@ public class Properties {
     private long mPageSize;
     @SerializedName("List")
     @Expose
-    private List<Property> mPropertyList = null;
+    private List<SearchEntry> mSearchEntryList = null;
     @SerializedName("FoundCategories")
     @Expose
     private List<Object> mFoundCategories = null;
@@ -27,7 +27,7 @@ public class Properties {
     /**
      * No args constructor for use in serialization
      */
-    public Properties() {
+    public SearchResult() {
     }
 
     /**
@@ -35,14 +35,14 @@ public class Properties {
      * @param pageSize
      * @param page
      * @param totalCount
-     * @param propertyList
+     * @param searchEntryList
      */
-    public Properties(long totalCount, long page, long pageSize, java.util.List<Property> propertyList, java.util.List<Object> foundCategories) {
+    public SearchResult(long totalCount, long page, long pageSize, java.util.List<SearchEntry> searchEntryList, java.util.List<Object> foundCategories) {
         super();
         this.mTotalCount = totalCount;
         this.mPage = page;
         this.mPageSize = pageSize;
-        this.mPropertyList = propertyList;
+        this.mSearchEntryList = searchEntryList;
         this.mFoundCategories = foundCategories;
     }
 
@@ -70,12 +70,12 @@ public class Properties {
         this.mPageSize = pageSize;
     }
 
-    public java.util.List<Property> getPropertyList() {
-        return mPropertyList;
+    public java.util.List<SearchEntry> getSearchEntryList() {
+        return mSearchEntryList;
     }
 
-    public void setPropertyList(java.util.List<Property> propertyList) {
-        this.mPropertyList = propertyList;
+    public void setSearchEntryList(java.util.List<SearchEntry> searchEntryList) {
+        this.mSearchEntryList = searchEntryList;
     }
 
     public java.util.List<Object> getFoundCategories() {
