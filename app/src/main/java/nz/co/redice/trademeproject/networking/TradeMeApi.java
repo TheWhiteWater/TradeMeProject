@@ -1,4 +1,4 @@
-package nz.co.redice.trademeproject.networkservices.client;
+package nz.co.redice.trademeproject.networking;
 
 import java.util.Map;
 
@@ -12,6 +12,7 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface TradeMeApi {
+
     @POST("RequestToken")
     Call<ResponseBody> requestToken(
             @Query("scope") String scope

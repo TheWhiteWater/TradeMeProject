@@ -1,4 +1,4 @@
-package nz.co.redice.trademeproject.networkservices.client;
+package nz.co.redice.trademeproject.networking;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkClient {
 
-    private Retrofit.Builder mRetrofit;
+    private static Retrofit.Builder mRetrofit;
 
     private static HttpLoggingInterceptor connectionLogger = new HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.HEADERS);
@@ -16,14 +16,17 @@ public class NetworkClient {
             .addInterceptor(connectionLogger);
 
 
-    public NetworkClient() {
+    private NetworkClient() {
         mRetrofit = new Retrofit.Builder()
                 .client(httpClient.build())
                 .addConverterFactory(GsonConverterFactory.create());
 
     }
 
-    public Retrofit.Builder getRetrofit() {
+    public static Retrofit.Builder getRetrofitBuilder() {
+        if (mRetrofit == null) {
+            mRetrofit = new Retrofit.Builder();
+        }
         return mRetrofit;
     }
 }
