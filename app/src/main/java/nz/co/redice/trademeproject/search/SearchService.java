@@ -1,4 +1,4 @@
-package nz.co.redice.trademeproject.networkservices;
+package nz.co.redice.trademeproject.search;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,10 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import nz.co.redice.trademeproject.AuthActivity;
-import nz.co.redice.trademeproject.model.search.SearchResult;
+import nz.co.redice.trademeproject.auth.mvp.AuthActivity;
 import nz.co.redice.trademeproject.model.search.SearchEntry;
-import nz.co.redice.trademeproject.networkservices.client.TradeMeApi;
+import nz.co.redice.trademeproject.model.search.SearchResult;
+import nz.co.redice.trademeproject.auth.services.AuthConstants;
+import nz.co.redice.trademeproject.networking.TradeMeApi;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,7 +54,7 @@ public class SearchService {
     @NotNull
     public String getAuthHeader() {
         SharedPreferences pref = mContext.getSharedPreferences("MyPref", 0);
-        return pref.getString(AuthService.HEADER_KEY, "");
+        return pref.getString(AuthConstants.HEADER_KEY, "");
     }
 
 

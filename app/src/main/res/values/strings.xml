@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TradeMeProject</string>
+    <string name="rent_rate">Rent per week</string>
 </resources>

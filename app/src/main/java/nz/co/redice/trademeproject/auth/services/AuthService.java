@@ -1,9 +1,5 @@
-package nz.co.redice.trademeproject.networkservices;
+package nz.co.redice.trademeproject.auth.services;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.webkit.WebView;
@@ -11,58 +7,48 @@ import android.webkit.WebViewClient;
 
 import java.io.IOException;
 
-import nz.co.redice.trademeproject.SearchActivity;
-import nz.co.redice.trademeproject.networkservices.client.TradeMeApi;
+import nz.co.redice.trademeproject.auth.mvp.AuthContract;
+import nz.co.redice.trademeproject.networking.NetworkClient;
+import nz.co.redice.trademeproject.networking.TradeMeApi;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
+
+import static nz.co.redice.trademeproject.auth.services.AuthConstants.*;
 
 public class AuthService {
 
-    private static final String OAUTH_URL = "https://secure.tmsandbox.co.nz/Oauth/";
-
-    private static final String SIGNATURE_METHOD = "PLAINTEXT";
-    static final String HEADER_KEY = "header_key";
-    private static final String SCOPE = "MyTradeMeRead,MyTradeMeWrite";
-
-    private static final String CONSUMER_KEY = "30548980993F4C6DBBC29869DB28F1FA";
-    private static final String CONSUMER_SECRET = "FC503D3AE07F64E3B9A023C2FF08BA33%26";
     private static String sOauthToken;
     private static String sOauthTokenSecret;
     private static String sOauthVerifier;
+    private AuthContract.OnAuthFinishedListener mListener;
 
-    private Context mContext;
     private TradeMeApi mTradeMeApi;
     private WebView mWebView;
 
-    public AuthService(Context context, Retrofit.Builder client) {
-        mContext = context;
-        mTradeMeApi = client
+    public AuthService(WebView webView, AuthContract.OnAuthFinishedListener listener) {
+        mTradeMeApi = NetworkClient.getRetrofitBuilder()
                 .baseUrl(OAUTH_URL)
                 .build()
                 .create(TradeMeApi.class);
-    }
-
-    public void setWebView(WebView webView) {
         mWebView = webView;
+        mListener = listener;
     }
 
-    private static String getHeaderForStageOne() {
+    private static String getStageOneHeader() {
         return "OAuth oauth_consumer_key=" + CONSUMER_KEY + "," +
                 "oauth_signature_method=" + SIGNATURE_METHOD + "," +
                 "oauth_signature=" + CONSUMER_SECRET;
     }
 
-    private static String getHeaderForStageThree() {
+    private static String getStageThreeHeader() {
         return "OAuth oauth_verifier=" + sOauthVerifier + "," +
                 "oauth_consumer_key=" + CONSUMER_KEY + "," +
                 "oauth_token=" + sOauthToken + "," +
                 "oauth_signature_method=" + SIGNATURE_METHOD + "," +
                 "oauth_signature=" + CONSUMER_SECRET + "" + sOauthTokenSecret;
     }
-
 
     private static String getRequestHeader() {
         return "OAuth " +
@@ -72,11 +58,9 @@ public class AuthService {
                 "oauth_signature=" + CONSUMER_SECRET + "" + sOauthTokenSecret;
     }
 
-
     public void authenticate() {
         launchStageOne();
     }
-
 
     /**
      * Stage 1.
@@ -88,29 +72,40 @@ public class AuthService {
      * list of these possible values: MyTradeMeRead, MyTradeMeWrite, BiddingAndBuying.
      */
 
-    private void launchStageOne() {
-        mTradeMeApi.requestToken(SCOPE, getHeaderForStageOne())
+    public void launchStageOne() {
+        mTradeMeApi.requestToken(SCOPE, getStageOneHeader())
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        getResponseLogged("Stage1", response);
-                        try {
-                            String respond = response.body().string();
-                            String[] result = respond.split("&");
-                            sOauthToken = result[0].substring((result[0].indexOf('=') + 1));
-                            sOauthTokenSecret = result[1].substring((result[1].indexOf('=') + 1));
+                        setResponseLog("Stage1 ", response);
+                        extractTokens(response);
+                        if (response.isSuccessful())
                             launchStageTwo();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.d("Stage1", "onCallFailure: " + t.getMessage());
+                        setFailureLog("Stage1 ", t.getMessage());
                     }
                 });
 
+    }
+
+
+    /**
+     * @param response Extracts tokens from response.body
+     */
+    private void extractTokens(Response<ResponseBody> response) {
+        if (response.isSuccessful() && response.body() != null) {
+            try {
+                String[] result = response.body().string().split("&");
+                sOauthToken = result[0].substring((result[0].indexOf('=') + 1));
+                sOauthTokenSecret = result[1].substring((result[1].indexOf('=') + 1));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else
+            setFailureLog("Stage2 ", response.message());
     }
 
 
@@ -121,9 +116,8 @@ public class AuthService {
      * the user will be redirected to a callback URL. Where granted verifier is being stored.
      */
 
-
     private void launchStageTwo() {
-        final String userAuthorizationUrl = "https://secure.tmsandbox.co.nz/Oauth/Authorize?oauth_token=" + sOauthToken;
+        final String userAuthorizationUrl = AuthConstants.USER_AUTHORIZATION_URL + sOauthToken;
         mWebView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -133,9 +127,7 @@ public class AuthService {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 if (url.contains("oauth_verifier")) {
-                    Log.d("Stage2", "url: " + url);
                     sOauthVerifier = url.substring(url.lastIndexOf('=') + 1);
-                    Log.d("Stage2", "OauthVerifier: " + sOauthVerifier);
                     if (sOauthVerifier.equals(url.substring(url.lastIndexOf('=') + 1)) || sOauthVerifier.isEmpty())
                         launchStageThree();
                     else
@@ -144,7 +136,7 @@ public class AuthService {
                 super.onPageStarted(view, url, favicon);
             }
         });
-
+        Log.d("stage2", "url: " + userAuthorizationUrl);
         mWebView.loadUrl(userAuthorizationUrl);
     }
 
@@ -157,58 +149,31 @@ public class AuthService {
      * among the OAuth parameters.
      */
     private void launchStageThree() {
-        mTradeMeApi.accessToken(getHeaderForStageThree())
+        mTradeMeApi.accessToken(getStageThreeHeader())
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        getResponseLogged("Stage3", response);
-                        try {
-                            String respond = response.body().string();
-                            String[] result = respond.split("&");
-                            sOauthToken = result[0].substring(result[0].indexOf("=") + 1);
-                            sOauthTokenSecret = result[1].substring(result[1].indexOf("=") + 1);
-                            performTestRequest();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        setResponseLog("Stage3 ", response);
+                        extractTokens(response);
+                        makeTestRequest();
                     }
-
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                        setFailureLog("Stage3 ", t.getMessage());
                     }
                 });
     }
 
 
-    private void saveHeader() {
-        SharedPreferences pref = mContext.getSharedPreferences("MyPref", 0);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString(HEADER_KEY, getRequestHeader());
-        Log.d("App", "saveHeader: " + getRequestHeader());
-        editor.commit();
-    }
-
-    private void launchRequests() {
-        saveHeader();
-        Intent intent = new Intent(mContext, SearchActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.startActivity(intent);
-        ((Activity) mContext).finish();
-    }
-
-    private void performTestRequest() {
+    private void makeTestRequest() {
         mTradeMeApi.testRequest(getRequestHeader())
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        getResponseLogged("testRequest", response);
+                        setResponseLog("test", response);
                         if (response.isSuccessful())
-                            launchRequests();
-                        // TODO: 4/15/2020
-                        //  else
+                            mListener.getHeader(getRequestHeader());
                     }
-
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
 
@@ -216,11 +181,14 @@ public class AuthService {
                 });
     }
 
+
     /**
+     * Logging
+     *
      * @param tag      Whatever helps identify method. Usually method name.
      * @param response retrofit response to log in.
      */
-    private void getResponseLogged(String tag, Response<ResponseBody> response) {
+    private void setResponseLog(String tag, Response<ResponseBody> response) {
 
         if (response.isSuccessful()) {
             Log.d(tag + "LogTag", "responseProcessing: code ==" + response.code());
@@ -234,6 +202,17 @@ public class AuthService {
                 e.printStackTrace();
             }
         }
+    }
+
+
+    /**
+     * Logging
+     *
+     * @param tag     tag
+     * @param message error message
+     */
+    private void setFailureLog(String tag, String message) {
+        Log.d(tag, message);
     }
 
 
