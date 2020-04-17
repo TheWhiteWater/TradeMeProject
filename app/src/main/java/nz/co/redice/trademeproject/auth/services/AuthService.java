@@ -1,9 +1,6 @@
 package nz.co.redice.trademeproject.auth.services;
 
-import android.graphics.Bitmap;
 import android.util.Log;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import java.io.IOException;
 
@@ -15,24 +12,26 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static nz.co.redice.trademeproject.auth.services.AuthConstants.*;
+import static nz.co.redice.trademeproject.auth.services.AuthConstants.CONSUMER_KEY;
+import static nz.co.redice.trademeproject.auth.services.AuthConstants.CONSUMER_SECRET;
+import static nz.co.redice.trademeproject.auth.services.AuthConstants.OAUTH_URL;
+import static nz.co.redice.trademeproject.auth.services.AuthConstants.SCOPE;
+import static nz.co.redice.trademeproject.auth.services.AuthConstants.SIGNATURE_METHOD;
 
-public class AuthService {
+public class AuthService implements AuthContract.Model {
 
     private static String sOauthToken;
     private static String sOauthTokenSecret;
     private static String sOauthVerifier;
-    private AuthContract.OnAuthFinishedListener mListener;
+    private AuthContract.ModelListener mListener;
 
     private TradeMeApi mTradeMeApi;
-    private WebView mWebView;
 
-    public AuthService(WebView webView, AuthContract.OnAuthFinishedListener listener) {
+    public AuthService(AuthContract.ModelListener listener) {
         mTradeMeApi = NetworkClient.getRetrofitBuilder()
                 .baseUrl(OAUTH_URL)
                 .build()
                 .create(TradeMeApi.class);
-        mWebView = webView;
         mListener = listener;
     }
 
@@ -58,8 +57,13 @@ public class AuthService {
                 "oauth_signature=" + CONSUMER_SECRET + "" + sOauthTokenSecret;
     }
 
-    public void authenticate() {
+    public void requestTempTokens() {
         launchStageOne();
+    }
+
+    @Override
+    public void requestFinalTokens(String verifier) {
+        launchStageTwo(verifier);
     }
 
     /**
@@ -80,7 +84,7 @@ public class AuthService {
                         setResponseLog("Stage1 ", response);
                         extractTokens(response);
                         if (response.isSuccessful())
-                            launchStageTwo();
+                            mListener.onTokensExtracted(sOauthToken);
                     }
 
                     @Override
@@ -116,28 +120,17 @@ public class AuthService {
      * the user will be redirected to a callback URL. Where granted verifier is being stored.
      */
 
-    private void launchStageTwo() {
-        final String userAuthorizationUrl = AuthConstants.USER_AUTHORIZATION_URL + sOauthToken;
-        mWebView.setWebViewClient(new WebViewClient() {
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return false;
-            }
+    private void launchStageTwo(String verifier) {
 
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                if (url.contains("oauth_verifier")) {
-                    sOauthVerifier = url.substring(url.lastIndexOf('=') + 1);
-                    if (sOauthVerifier.equals(url.substring(url.lastIndexOf('=') + 1)) || sOauthVerifier.isEmpty())
-                        launchStageThree();
-                    else
-                        Log.d("Stage2", "onPageStarted: Verifier substring ERROR");
-                }
-                super.onPageStarted(view, url, favicon);
-            }
-        });
-        Log.d("stage2", "url: " + userAuthorizationUrl);
-        mWebView.loadUrl(userAuthorizationUrl);
+        if (verifier.contains("oauth_verifier")) {
+            sOauthVerifier = verifier.substring(verifier.lastIndexOf('=') + 1);
+            if (sOauthVerifier.equals(verifier.substring(verifier.lastIndexOf('=') + 1))
+                    || sOauthVerifier.isEmpty())
+                launchStageThree();
+            else
+                Log.d("Stage2", "onPageStarted: ERROR! String doesn't contain verifier.");
+        }
+
     }
 
 
@@ -157,6 +150,7 @@ public class AuthService {
                         extractTokens(response);
                         makeTestRequest();
                     }
+
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         setFailureLog("Stage3 ", t.getMessage());
@@ -174,6 +168,7 @@ public class AuthService {
                         if (response.isSuccessful())
                             mListener.getHeader(getRequestHeader());
                     }
+
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
 

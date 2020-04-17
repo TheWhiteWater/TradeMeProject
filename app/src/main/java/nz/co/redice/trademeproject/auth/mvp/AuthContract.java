@@ -12,9 +12,17 @@ public interface AuthContract {
     interface View {
         WebView getWebView();
         void onAuthenticated(String header);
+        String getUserVerifier(String token);
     }
 
-    interface OnAuthFinishedListener {
+    interface Model {
+        void requestTempTokens();
+        void requestFinalTokens(String verifier);
+    }
+
+    interface ModelListener {
         void getHeader(String header);
+        void onTokensExtracted(String token);
+
     }
 }
