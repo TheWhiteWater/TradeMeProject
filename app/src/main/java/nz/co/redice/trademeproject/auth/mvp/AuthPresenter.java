@@ -1,7 +1,5 @@
 package nz.co.redice.trademeproject.auth.mvp;
 
-import android.webkit.WebView;
-
 import nz.co.redice.trademeproject.auth.services.AuthService;
 
 public class AuthPresenter implements AuthContract.Presenter, AuthContract.ModelListener {
