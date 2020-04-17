@@ -23,16 +23,16 @@ public class AuthService implements AuthContract.Model {
     private static String sOauthToken;
     private static String sOauthTokenSecret;
     private static String sOauthVerifier;
-    private AuthContract.ModelListener mListener;
+    private AuthContract.Presenter mPresenter;
 
     private TradeMeApi mTradeMeApi;
 
-    public AuthService(AuthContract.ModelListener listener) {
+    public AuthService(AuthContract.Presenter presenter) {
         mTradeMeApi = NetworkClient.getRetrofitBuilder()
                 .baseUrl(OAUTH_URL)
                 .build()
                 .create(TradeMeApi.class);
-        mListener = listener;
+        mPresenter = presenter;
     }
 
     private static String getStageOneHeader() {
@@ -84,7 +84,7 @@ public class AuthService implements AuthContract.Model {
                         setResponseLog("Stage1 ", response);
                         extractTokens(response);
                         if (response.isSuccessful())
-                            mListener.onTokensExtracted(sOauthToken);
+                            mPresenter.onTokensExtracted(sOauthToken);
                     }
 
                     @Override
@@ -166,7 +166,7 @@ public class AuthService implements AuthContract.Model {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         setResponseLog("test", response);
                         if (response.isSuccessful())
-                            mListener.getHeader(getRequestHeader());
+                            mPresenter.onTestRequestSuccessful(getRequestHeader());
                     }
 
                     @Override

@@ -13,16 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".menu.LocationListActivity">
+
+        </activity>
+        <activity android:name=".menu.SingleLocationActivity" />
+        <activity android:name=".menu.SearchMenuActivity"></activity>
+
+        <activity android:name=".auth.mvp.AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name=".menu.SingleLocationActivity" />
-        <activity android:name=".menu.SearchMenuActivity">
-        </activity>
-        <activity android:name=".auth.mvp.AuthActivity" />
     </application>
 
 </manifest>

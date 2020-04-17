@@ -1,18 +1,17 @@
 package nz.co.redice.trademeproject.auth.mvp;
 
-import android.webkit.WebView;
-
 public interface AuthContract {
 
     interface Presenter {
         void launchAuthorization();
-        void unsubscribe();
+        void onTokensExtracted(String token);
+        void onVerifierReceived (String verifier);
+        void onTestRequestSuccessful(String header);
     }
 
     interface View {
-        WebView getWebView();
-        void onAuthenticated(String header);
-        String getUserVerifier(String token);
+        void onAuthenticationSuccessful(String header);
+        void getUserVerifier(String token);
     }
 
     interface Model {
@@ -20,9 +19,5 @@ public interface AuthContract {
         void requestFinalTokens(String verifier);
     }
 
-    interface ModelListener {
-        void getHeader(String header);
-        void onTokensExtracted(String token);
 
-    }
 }
