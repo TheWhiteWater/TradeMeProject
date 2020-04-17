@@ -7,13 +7,11 @@ import nz.co.redice.trademeproject.auth.services.AuthService;
 public class AuthPresenter implements AuthContract.Presenter, AuthContract.ModelListener {
 
 
-    private WebView mWebView;
     private AuthContract.View mView;
     private AuthContract.Model mModel;
 
     public AuthPresenter(AuthContract.View view) {
         mView = view;
-        mWebView = view.getWebView();
     }
 
     @Override
@@ -25,7 +23,6 @@ public class AuthPresenter implements AuthContract.Presenter, AuthContract.Model
     @Override
     public void unsubscribe() {
         mView = null;
-        mWebView = null;
     }
 
     @Override
