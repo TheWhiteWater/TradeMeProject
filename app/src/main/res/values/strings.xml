@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">TradeMeProject</string>
     <string name="rent_rate">Rent per week</string>
+    <string name="dlg_title">custom dialog title</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import nz.co.redice.trademeproject.R;
-import nz.co.redice.trademeproject.search.SearchActivity;
+import nz.co.redice.trademeproject.menu.SearchMenuActivity;
 
 import static nz.co.redice.trademeproject.auth.services.AuthConstants.HEADER_KEY;
 
@@ -38,7 +38,7 @@ public class AuthActivity extends AppCompatActivity implements AuthContract.View
     @Override
     public void onAuthenticated(String header) {
         storeHeader(header);
-        Intent intent = new Intent(this, SearchActivity.class);
+        Intent intent = new Intent(this, SearchMenuActivity.class);
         startActivity(intent);
         finish();
     }
