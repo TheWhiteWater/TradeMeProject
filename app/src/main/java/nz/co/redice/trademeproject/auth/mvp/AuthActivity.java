@@ -21,8 +21,7 @@ import static nz.co.redice.trademeproject.auth.services.AuthConstants.HEADER_KEY
 public class AuthActivity extends AppCompatActivity implements AuthContract.View {
 
     @BindView(R.id.webView) WebView mWebView;
-    AuthContract.Presenter mAuthPresenter;
-    private static String mUrl;
+    AuthContract.Presenter mPresenter;
 
 
     @Override
@@ -30,26 +29,20 @@ public class AuthActivity extends AppCompatActivity implements AuthContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
         ButterKnife.bind(this);
-        mAuthPresenter = new AuthPresenter(this);
-        mAuthPresenter.launchAuthorization();
-    }
-
-
-    @Override
-    public WebView getWebView() {
-        return mWebView;
+        mPresenter = new AuthPresenter(this);
+        mPresenter.launchAuthorization();
     }
 
     @Override
-    public void onAuthenticated(String header) {
+    public void onAuthenticationSuccessful(String header) {
         storeHeader(header);
         Intent intent = new Intent(this, SearchMenuActivity.class);
         startActivity(intent);
         finish();
     }
 
-    @Override
-    public String getUserVerifier(String token) {
+
+    public void getUserVerifier(String token) {
         final String userAuthorizationUrl = AuthConstants.USER_AUTHORIZATION_URL + token;
         mWebView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -60,14 +53,12 @@ public class AuthActivity extends AppCompatActivity implements AuthContract.View
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 if (url.contains("oauth_verifier")) {
-                    mUrl = url;
+                    mPresenter.onVerifierReceived(url);
                 }
                 super.onPageStarted(view, url, favicon);
             }
         });
-        Log.d("stage2", "url: " + userAuthorizationUrl);
         mWebView.loadUrl(userAuthorizationUrl);
-        return mUrl;
     }
 
     private void storeHeader(String header) {
@@ -80,7 +71,7 @@ public class AuthActivity extends AppCompatActivity implements AuthContract.View
     @Override
     protected void onStop() {
         super.onStop();
-        mAuthPresenter.unsubscribe();
+        mPresenter = null;
     }
 
 }

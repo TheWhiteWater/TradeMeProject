@@ -2,7 +2,7 @@ package nz.co.redice.trademeproject.auth.mvp;
 
 import nz.co.redice.trademeproject.auth.services.AuthService;
 
-public class AuthPresenter implements AuthContract.Presenter, AuthContract.ModelListener {
+public class AuthPresenter implements AuthContract.Presenter {
 
 
     private AuthContract.View mView;
@@ -19,18 +19,18 @@ public class AuthPresenter implements AuthContract.Presenter, AuthContract.Model
     }
 
     @Override
-    public void unsubscribe() {
-        mView = null;
-    }
-
-    @Override
-    public void getHeader(String header) {
-        mView.onAuthenticated(header);
-    }
-
-    @Override
     public void onTokensExtracted(String token) {
         mView.getUserVerifier(token);
+    }
+
+    @Override
+    public void onVerifierReceived(String verifier) {
+        mModel.requestFinalTokens(verifier);
+    }
+
+    @Override
+    public void onTestRequestSuccessful(String header) {
+        mView.onAuthenticationSuccessful(header);
     }
 
 
