@@ -10,6 +10,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import nz.co.redice.trademeproject.R;
+import nz.co.redice.trademeproject.menu.location.list.LocalityListActivity;
 
 public class SearchMenuActivity extends AppCompatActivity {
 
@@ -21,14 +22,13 @@ public class SearchMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
-
     }
 
 
 
     @OnClick(R.id.location_card)
     public void onViewClicked() {
-        Intent intent = new Intent(this, SingleLocationActivity.class);
+        Intent intent = new Intent(this, LocalityListActivity.class);
         startActivity(intent);
     }
 }

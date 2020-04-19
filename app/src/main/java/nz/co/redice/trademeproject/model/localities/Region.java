@@ -6,7 +6,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Region {
+import nz.co.redice.trademeproject.menu.location.list.LocalityEntry;
+
+public class Region implements LocalityEntry {
 
     @SerializedName("LocalityId")
     @Expose
@@ -23,13 +25,17 @@ public class Region {
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public Region() {
     }
 
+    public Region(String name) {
+        this.name = name;
+    }
+
     /**
-     * 
+     *
      * @param name
      * @param districts
      * @param count
@@ -75,4 +81,8 @@ public class Region {
         this.count = count;
     }
 
+    @Override
+    public String getEntryName() {
+        return name;
+    }
 }

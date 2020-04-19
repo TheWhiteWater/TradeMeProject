@@ -1,4 +1,4 @@
-package nz.co.redice.trademeproject.auth.services;
+package nz.co.redice.trademeproject.auth.mvp;
 
 public class AuthConstants {
     public static final String OAUTH_URL = "https://secure.tmsandbox.co.nz/Oauth/";

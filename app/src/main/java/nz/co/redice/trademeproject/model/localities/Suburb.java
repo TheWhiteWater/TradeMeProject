@@ -6,7 +6,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Suburb {
+import nz.co.redice.trademeproject.menu.location.list.LocalityEntry;
+
+public class Suburb implements LocalityEntry {
 
     @SerializedName("SuburbId")
     @Expose
@@ -23,13 +25,15 @@ public class Suburb {
 
     /**
      * No args constructor for use in serialization
-     * 
      */
     public Suburb() {
     }
 
+    public Suburb(String name) {
+        this.name = name;
+    }
+
     /**
-     * 
      * @param suburbId
      * @param adjacentSuburbs
      * @param name
@@ -75,4 +79,8 @@ public class Suburb {
         this.count = count;
     }
 
+    @Override
+    public String getEntryName() {
+        return name;
+    }
 }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -13,10 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import nz.co.redice.trademeproject.R;
-import nz.co.redice.trademeproject.auth.services.AuthConstants;
 import nz.co.redice.trademeproject.menu.SearchMenuActivity;
 
-import static nz.co.redice.trademeproject.auth.services.AuthConstants.HEADER_KEY;
+import static nz.co.redice.trademeproject.auth.mvp.AuthConstants.HEADER_KEY;
 
 public class AuthActivity extends AppCompatActivity implements AuthContract.View {
 
@@ -32,6 +30,7 @@ public class AuthActivity extends AppCompatActivity implements AuthContract.View
         mPresenter = new AuthPresenter(this);
         mPresenter.launchAuthorization();
     }
+
 
     @Override
     public void onAuthenticationSuccessful(String header) {
@@ -68,10 +67,6 @@ public class AuthActivity extends AppCompatActivity implements AuthContract.View
         editor.commit();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mPresenter = null;
-    }
+
 
 }

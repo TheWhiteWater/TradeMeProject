@@ -1,7 +1,5 @@
 package nz.co.redice.trademeproject.auth.mvp;
 
-import nz.co.redice.trademeproject.auth.services.AuthService;
-
 public class AuthPresenter implements AuthContract.Presenter {
 
 

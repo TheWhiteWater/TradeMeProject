@@ -15,7 +15,7 @@ import java.util.Map;
 import nz.co.redice.trademeproject.auth.mvp.AuthActivity;
 import nz.co.redice.trademeproject.model.search.SearchEntry;
 import nz.co.redice.trademeproject.model.search.SearchResult;
-import nz.co.redice.trademeproject.auth.services.AuthConstants;
+import nz.co.redice.trademeproject.auth.mvp.AuthConstants;
 import nz.co.redice.trademeproject.networking.TradeMeApi;
 import retrofit2.Call;
 import retrofit2.Callback;

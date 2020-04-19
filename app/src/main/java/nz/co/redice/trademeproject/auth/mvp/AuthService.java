@@ -1,10 +1,9 @@
-package nz.co.redice.trademeproject.auth.services;
+package nz.co.redice.trademeproject.auth.mvp;
 
 import android.util.Log;
 
 import java.io.IOException;
 
-import nz.co.redice.trademeproject.auth.mvp.AuthContract;
 import nz.co.redice.trademeproject.networking.NetworkClient;
 import nz.co.redice.trademeproject.networking.TradeMeApi;
 import okhttp3.ResponseBody;
@@ -12,11 +11,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static nz.co.redice.trademeproject.auth.services.AuthConstants.CONSUMER_KEY;
-import static nz.co.redice.trademeproject.auth.services.AuthConstants.CONSUMER_SECRET;
-import static nz.co.redice.trademeproject.auth.services.AuthConstants.OAUTH_URL;
-import static nz.co.redice.trademeproject.auth.services.AuthConstants.SCOPE;
-import static nz.co.redice.trademeproject.auth.services.AuthConstants.SIGNATURE_METHOD;
+import static nz.co.redice.trademeproject.auth.mvp.AuthConstants.CONSUMER_KEY;
+import static nz.co.redice.trademeproject.auth.mvp.AuthConstants.CONSUMER_SECRET;
+import static nz.co.redice.trademeproject.auth.mvp.AuthConstants.OAUTH_URL;
+import static nz.co.redice.trademeproject.auth.mvp.AuthConstants.SCOPE;
+import static nz.co.redice.trademeproject.auth.mvp.AuthConstants.SIGNATURE_METHOD;
 
 public class AuthService implements AuthContract.Model {
 

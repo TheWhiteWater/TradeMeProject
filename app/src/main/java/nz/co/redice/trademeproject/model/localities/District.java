@@ -6,7 +6,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class District {
+import nz.co.redice.trademeproject.menu.location.list.LocalityEntry;
+
+public class District implements LocalityEntry {
 
     @SerializedName("DistrictId")
     @Expose
@@ -26,6 +28,11 @@ public class District {
      * 
      */
     public District() {
+    }
+
+
+    public District(String name) {
+        this.name = name;
     }
 
     /**
@@ -75,4 +82,8 @@ public class District {
         this.count = count;
     }
 
+    @Override
+    public String getEntryName() {
+        return name;
+    }
 }
