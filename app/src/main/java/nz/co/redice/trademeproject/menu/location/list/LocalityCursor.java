@@ -12,7 +12,6 @@ public class LocalityCursor {
     private District mDistrict;
     private Suburb mSuburb;
     private List<Long> mAdjacentSuburbs;
-    private static LocalityCursor instance;
 
     public Region getRegion() {
         return mRegion;

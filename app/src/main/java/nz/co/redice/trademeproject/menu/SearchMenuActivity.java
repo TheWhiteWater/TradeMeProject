@@ -24,8 +24,6 @@ public class SearchMenuActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-
-
     @OnClick(R.id.location_card)
     public void onViewClicked() {
         Intent intent = new Intent(this, LocalityListActivity.class);

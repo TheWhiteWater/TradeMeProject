@@ -32,13 +32,12 @@ public class LocalityListFragment extends Fragment implements LocalityContract.V
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list_locality, container, false);
-        mLocalityListRecyclerView = view.findViewById(R.id.location_list_recycler_view);
+        View view = inflater.inflate(R.layout.fragment_for_recyclerview, container, false);
+        mLocalityListRecyclerView = view.findViewById(R.id.recyclerview);
         mLocalityListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mPresenter.inflateMenu();
         return view;
     }
-
 
     @Override
     public void updateUI(List<LocalityEntry> localityEntryList) {
@@ -62,7 +61,7 @@ public class LocalityListFragment extends Fragment implements LocalityContract.V
 
         public Holder(View view, LocalityAdapter adapter) {
             super(view);
-            mTextView = itemView.findViewById(R.id.locality_item_name);
+            mTextView = itemView.findViewById(R.id.item_textview);
             mAdapter = adapter;
             itemView.setOnClickListener(this);
         }
@@ -77,13 +76,12 @@ public class LocalityListFragment extends Fragment implements LocalityContract.V
 
     private class LocalityAdapter extends RecyclerView.Adapter<Holder> {
 
-        private List<LocalityEntry> mLocalityEntries;
+        private List<LocalityEntry> mLocalities;
         private LocalityContract.View mView;
 
-        public LocalityAdapter(LocalityContract.View view, List<LocalityEntry> localityEntries) {
+        public LocalityAdapter(LocalityContract.View view, List<LocalityEntry> localities) {
             mView = view;
-            mLocalityEntries = localityEntries;
-
+            mLocalities = localities;
         }
 
         @NonNull
@@ -95,13 +93,13 @@ public class LocalityListFragment extends Fragment implements LocalityContract.V
 
         @Override
         public void onBindViewHolder(@NonNull Holder holder, int position) {
-            LocalityEntry localityEntry = mLocalityEntries.get(position);
+            LocalityEntry localityEntry = mLocalities.get(position);
             holder.mTextView.setText(localityEntry.getEntryName());
         }
 
         @Override
         public int getItemCount() {
-            return mLocalityEntries.size();
+            return mLocalities.size();
         }
 
         public void onHolderClicked(int position) {

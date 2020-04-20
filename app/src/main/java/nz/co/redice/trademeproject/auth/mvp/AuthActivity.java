@@ -1,7 +1,7 @@
 package nz.co.redice.trademeproject.auth.mvp;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.webkit.WebView;
@@ -14,8 +14,6 @@ import butterknife.ButterKnife;
 import nz.co.redice.trademeproject.R;
 import nz.co.redice.trademeproject.menu.SearchMenuActivity;
 
-import static nz.co.redice.trademeproject.auth.mvp.AuthConstants.HEADER_KEY;
-
 public class AuthActivity extends AppCompatActivity implements AuthContract.View {
 
     @BindView(R.id.webView) WebView mWebView;
@@ -27,19 +25,22 @@ public class AuthActivity extends AppCompatActivity implements AuthContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
         ButterKnife.bind(this);
-        mPresenter = new AuthPresenter(this);
+        mPresenter = AuthPresenter.getInstance();
+        mPresenter.attachView(this);
         mPresenter.launchAuthorization();
     }
 
+    @Override
+    public Context getContext() {
+        return getApplicationContext();
+    }
 
     @Override
-    public void onAuthenticationSuccessful(String header) {
-        storeHeader(header);
+    public void onAuthenticationComplete() {
         Intent intent = new Intent(this, SearchMenuActivity.class);
         startActivity(intent);
         finish();
     }
-
 
     public void getUserVerifier(String token) {
         final String userAuthorizationUrl = AuthConstants.USER_AUTHORIZATION_URL + token;
@@ -51,7 +52,7 @@ public class AuthActivity extends AppCompatActivity implements AuthContract.View
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                if (url.contains("oauth_verifier")) {
+                if (url.contains(AuthConstants.VERIFIER_KEY)) {
                     mPresenter.onVerifierReceived(url);
                 }
                 super.onPageStarted(view, url, favicon);
@@ -60,13 +61,22 @@ public class AuthActivity extends AppCompatActivity implements AuthContract.View
         mWebView.loadUrl(userAuthorizationUrl);
     }
 
-    private void storeHeader(String header) {
-        SharedPreferences pref = getSharedPreferences("MyPref", 0);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString(HEADER_KEY, header);
-        editor.commit();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter = null;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mPresenter.onActivityStopping(true);
+    }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mPresenter.onActivityStopping(false);
+        mPresenter.launchAuthorization();
+    }
 }

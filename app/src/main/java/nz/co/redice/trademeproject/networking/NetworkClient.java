@@ -10,13 +10,13 @@ public class NetworkClient {
     private static Retrofit.Builder mRetrofit;
 
     private static HttpLoggingInterceptor connectionLogger = new HttpLoggingInterceptor()
-            .setLevel(HttpLoggingInterceptor.Level.HEADERS);
+            .setLevel(HttpLoggingInterceptor.Level.BODY);
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
             .addInterceptor(connectionLogger);
 
 
-    private NetworkClient() {
+    public NetworkClient() {
         mRetrofit = new Retrofit.Builder()
                 .client(httpClient.build())
                 .addConverterFactory(GsonConverterFactory.create());

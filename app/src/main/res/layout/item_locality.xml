@@ -9,7 +9,7 @@
 
 
     <TextView
-        android:id="@+id/locality_item_name"
+        android:id="@+id/item_textview"
         tools:text="Location"
         android:padding="5dp"
         android:paddingStart="15dp"
