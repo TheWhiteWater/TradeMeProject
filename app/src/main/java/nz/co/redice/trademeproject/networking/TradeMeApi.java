@@ -2,7 +2,7 @@ package nz.co.redice.trademeproject.networking;
 
 import java.util.Map;
 
-import nz.co.redice.trademeproject.model.search.SearchResult;
+import nz.co.redice.trademeproject.models.search.SearchResult;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;

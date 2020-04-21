@@ -10,9 +10,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import nz.co.redice.trademeproject.R;
-import nz.co.redice.trademeproject.menu.location.list.LocalityListActivity;
+import nz.co.redice.trademeproject.menu.location.LocalityListActivity;
 
-public class SearchMenuActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
 
 
     @BindView(R.id.location_card) CardView locationCard;

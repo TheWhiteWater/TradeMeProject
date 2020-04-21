@@ -1,11 +1,11 @@
-package nz.co.redice.trademeproject.menu.location.list;
+package nz.co.redice.trademeproject.menu.common;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import nz.co.redice.trademeproject.model.localities.District;
-import nz.co.redice.trademeproject.model.localities.Region;
-import nz.co.redice.trademeproject.model.localities.Suburb;
+import nz.co.redice.trademeproject.models.localities.District;
+import nz.co.redice.trademeproject.models.localities.Region;
+import nz.co.redice.trademeproject.models.localities.Suburb;
 
 public class LocalityCursor {
     private Region mRegion;

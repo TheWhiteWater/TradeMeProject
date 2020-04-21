@@ -1,12 +1,10 @@
 
-package nz.co.redice.trademeproject.model.localities;
+package nz.co.redice.trademeproject.models.localities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
-
-import nz.co.redice.trademeproject.menu.location.list.LocalityEntry;
 
 public class Region implements LocalityEntry {
 

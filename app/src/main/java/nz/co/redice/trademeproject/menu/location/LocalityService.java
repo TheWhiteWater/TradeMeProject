@@ -1,11 +1,12 @@
-package nz.co.redice.trademeproject.menu.location.list;
+package nz.co.redice.trademeproject.menu.location;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import nz.co.redice.trademeproject.model.localities.District;
-import nz.co.redice.trademeproject.model.localities.Region;
-import nz.co.redice.trademeproject.model.localities.Suburb;
+import nz.co.redice.trademeproject.models.localities.District;
+import nz.co.redice.trademeproject.models.localities.LocalityEntry;
+import nz.co.redice.trademeproject.models.localities.Region;
+import nz.co.redice.trademeproject.models.localities.Suburb;
 
 public class LocalityService implements LocalityContract.Model {
 
@@ -14,21 +15,14 @@ public class LocalityService implements LocalityContract.Model {
     private List<District> mDistricts;
     private List<Suburb> mSuburbs;
 
-    boolean regionDone;
-    boolean districtDone;
-    boolean suburbDone;
-
 
     public LocalityService(LocalityContract.Presenter presenter) {
         mPresenter = presenter;
         createMockRegions();
     }
 
-
     public void createMockRegions() {
-
         List<Region> regions = new ArrayList<>();
-
 
         for (int i = 0; i < 5; i++) {
             Region reg = new Region("region" + i);
@@ -56,25 +50,34 @@ public class LocalityService implements LocalityContract.Model {
     @Override
     public List<LocalityEntry> getRegionList() {
         List<? extends LocalityEntry> list = mRegions;
-        regionDone = true;
         return (List<LocalityEntry>) list;
     }
 
+
     @Override
-    public List<LocalityEntry> getSubLocalityList(int position) {
-        if (districtDone == false) {
-            mDistricts = mRegions.get(position).getDistricts();
-            List<? extends LocalityEntry> list = mDistricts;
-            districtDone = true;
-            return (List<LocalityEntry>) list;
-        } else {
-            mSuburbs = mDistricts.get(position).getSuburbs();
-            List<? extends LocalityEntry> list = mSuburbs;
-            return (List<LocalityEntry>) list;
+    public List<LocalityEntry> getSubLocalityList(LocalityEntry entry) {
+        List<? extends LocalityEntry> list = null;
+        if (entry instanceof Region) {
+            for (int i = 0; i < mRegions.size(); i++) {
+                if (mRegions.get(i).getName().equals(entry.getEntryName())) {
+                    mDistricts = mRegions.get(i).getDistricts();
+                    list = mDistricts;
+                }
+            }
         }
+        if (entry instanceof District) {
+            for (int i = 0; i < mDistricts.size(); i++) {
+                if (mDistricts.get(i).getName().equals(entry.getEntryName())) {
+                    mSuburbs = mDistricts.get(i).getSuburbs();
+                    list = mSuburbs;
+                }
+            }
+        } if (entry instanceof Suburb){
+            list = mSuburbs;
+        }
+
+        return (List<LocalityEntry>) list;
     }
-
-
 
 
 }

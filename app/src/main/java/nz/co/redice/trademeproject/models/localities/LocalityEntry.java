@@ -1,4 +1,4 @@
-package nz.co.redice.trademeproject.menu.location.list;
+package nz.co.redice.trademeproject.models.localities;
 
 public interface LocalityEntry {
 

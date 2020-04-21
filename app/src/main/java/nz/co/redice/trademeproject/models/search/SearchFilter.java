@@ -1,4 +1,4 @@
-package nz.co.redice.trademeproject.model.search;
+package nz.co.redice.trademeproject.models.search;
 
 import java.util.Map;
 
