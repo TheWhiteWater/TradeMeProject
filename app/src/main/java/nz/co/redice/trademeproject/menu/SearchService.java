@@ -1,4 +1,4 @@
-package nz.co.redice.trademeproject.search;
+package nz.co.redice.trademeproject.menu;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import nz.co.redice.trademeproject.auth.mvp.AuthActivity;
-import nz.co.redice.trademeproject.model.search.SearchEntry;
-import nz.co.redice.trademeproject.model.search.SearchResult;
-import nz.co.redice.trademeproject.auth.mvp.AuthConstants;
+import nz.co.redice.trademeproject.auth.AuthActivity;
+import nz.co.redice.trademeproject.auth.AuthConstants;
+import nz.co.redice.trademeproject.models.search.SearchEntry;
+import nz.co.redice.trademeproject.models.search.SearchResult;
 import nz.co.redice.trademeproject.networking.TradeMeApi;
 import retrofit2.Call;
 import retrofit2.Callback;

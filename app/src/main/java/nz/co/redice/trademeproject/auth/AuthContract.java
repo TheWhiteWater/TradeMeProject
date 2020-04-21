@@ -1,4 +1,4 @@
-package nz.co.redice.trademeproject.auth.mvp;
+package nz.co.redice.trademeproject.auth;
 
 
 import android.content.Context;

@@ -1,61 +1,56 @@
 
-package nz.co.redice.trademeproject.model.localities;
+package nz.co.redice.trademeproject.models.localities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import nz.co.redice.trademeproject.menu.location.list.LocalityEntry;
+public class Suburb implements LocalityEntry {
 
-public class District implements LocalityEntry {
-
-    @SerializedName("DistrictId")
+    @SerializedName("SuburbId")
     @Expose
-    private Long districtId;
+    private Long suburbId;
     @SerializedName("Name")
     @Expose
     private String name;
-    @SerializedName("Suburbs")
+    @SerializedName("AdjacentSuburbs")
     @Expose
-    private List<Suburb> suburbs = null;
+    private List<Long> adjacentSuburbs = null;
     @SerializedName("Count")
     @Expose
     private Long count;
 
     /**
      * No args constructor for use in serialization
-     * 
      */
-    public District() {
+    public Suburb() {
     }
 
-
-    public District(String name) {
+    public Suburb(String name) {
         this.name = name;
     }
 
     /**
-     * 
-     * @param suburbs
-     * @param districtId
+     * @param suburbId
+     * @param adjacentSuburbs
      * @param name
      * @param count
      */
-    public District(Long districtId, String name, List<Suburb> suburbs, Long count) {
+    public Suburb(Long suburbId, String name, List<Long> adjacentSuburbs, Long count) {
         super();
-        this.districtId = districtId;
+        this.suburbId = suburbId;
         this.name = name;
-        this.suburbs = suburbs;
+        this.adjacentSuburbs = adjacentSuburbs;
         this.count = count;
     }
 
-    public Long getDistrictId() {
-        return districtId;
+    public Long getSuburbId() {
+        return suburbId;
     }
 
-    public void setDistrictId(Long districtId) {
-        this.districtId = districtId;
+    public void setSuburbId(Long suburbId) {
+        this.suburbId = suburbId;
     }
 
     public String getName() {
@@ -66,12 +61,12 @@ public class District implements LocalityEntry {
         this.name = name;
     }
 
-    public List<Suburb> getSuburbs() {
-        return suburbs;
+    public List<Long> getAdjacentSuburbs() {
+        return adjacentSuburbs;
     }
 
-    public void setSuburbs(List<Suburb> suburbs) {
-        this.suburbs = suburbs;
+    public void setAdjacentSuburbs(List<Long> adjacentSuburbs) {
+        this.adjacentSuburbs = adjacentSuburbs;
     }
 
     public Long getCount() {

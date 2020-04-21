@@ -1,4 +1,4 @@
-package nz.co.redice.trademeproject.auth.mvp;
+package nz.co.redice.trademeproject.auth;
 
 import android.util.Log;
 
@@ -11,11 +11,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static nz.co.redice.trademeproject.auth.mvp.AuthConstants.CONSUMER_KEY;
-import static nz.co.redice.trademeproject.auth.mvp.AuthConstants.CONSUMER_SECRET;
-import static nz.co.redice.trademeproject.auth.mvp.AuthConstants.OAUTH_URL;
-import static nz.co.redice.trademeproject.auth.mvp.AuthConstants.SCOPE;
-import static nz.co.redice.trademeproject.auth.mvp.AuthConstants.SIGNATURE_METHOD;
+import static nz.co.redice.trademeproject.auth.AuthConstants.CONSUMER_KEY;
+import static nz.co.redice.trademeproject.auth.AuthConstants.CONSUMER_SECRET;
+import static nz.co.redice.trademeproject.auth.AuthConstants.OAUTH_URL;
+import static nz.co.redice.trademeproject.auth.AuthConstants.SCOPE;
+import static nz.co.redice.trademeproject.auth.AuthConstants.SIGNATURE_METHOD;
 
 public class AuthService implements AuthContract.Model {
 

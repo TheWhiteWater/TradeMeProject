@@ -12,20 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         >
-        <activity android:name=".menu.location.list.LocalityListActivity">
+        <activity android:name=".menu.location.LocalityListActivity">
 
         </activity>
-        <activity android:name=".menu.location.single.SingleLocationActivity" />
-        <activity android:name=".menu.SearchMenuActivity">
-
-
-        </activity>
-
-        <activity android:name=".auth.mvp.AuthActivity">
+        <activity android:name=".menu.details.DetailsActivity" />
+        <activity android:name=".menu.SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".auth.AuthActivity">
         </activity>
     </application>
 

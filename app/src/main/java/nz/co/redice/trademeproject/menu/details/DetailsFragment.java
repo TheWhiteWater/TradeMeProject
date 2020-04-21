@@ -1,4 +1,4 @@
-package nz.co.redice.trademeproject.menu.location.single;
+package nz.co.redice.trademeproject.menu.details;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,9 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import nz.co.redice.trademeproject.R;
-import nz.co.redice.trademeproject.menu.location.list.LocalityCursor;
+import nz.co.redice.trademeproject.menu.common.LocalityCursor;
 
-public class SingleLocationFragment extends Fragment {
+public class DetailsFragment extends Fragment {
 
     private LocalityCursor mCursor;
 
@@ -25,7 +25,7 @@ public class SingleLocationFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_single_locality, container, false);
+        View view = inflater.inflate(R.layout.fragment_details, container, false);
 
         return view;
     }

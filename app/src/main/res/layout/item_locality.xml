@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/location_item_card"
-    style="@style/clickable.query"
-    app:cardCornerRadius="4dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:paddingStart="15dp">
 
 
     <TextView
         android:id="@+id/item_textview"
-        tools:text="Location"
-        android:padding="5dp"
-        android:paddingStart="15dp"
-        android:textSize="@dimen/large_text_size"
+        android:textColor="@color/primary_text"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
+        android:padding="5dp"
+        android:textSize="@dimen/large_text_size"
+        tools:text="Location" />
 
-
-</androidx.cardview.widget.CardView>
+</LinearLayout>
 

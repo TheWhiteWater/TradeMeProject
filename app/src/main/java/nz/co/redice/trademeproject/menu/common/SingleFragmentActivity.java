@@ -1,4 +1,4 @@
-package nz.co.redice.trademeproject.menu.location;
+package nz.co.redice.trademeproject.menu.common;
 
 import android.os.Bundle;
 

@@ -1,8 +1,8 @@
-package nz.co.redice.trademeproject.auth.mvp;
+package nz.co.redice.trademeproject.auth;
 
 import android.content.SharedPreferences;
 
-import static nz.co.redice.trademeproject.auth.mvp.AuthConstants.HEADER_KEY;
+import static nz.co.redice.trademeproject.auth.AuthConstants.HEADER_KEY;
 
 public class AuthPresenter implements AuthContract.Presenter {
 
