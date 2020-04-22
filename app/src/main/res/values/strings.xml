@@ -2,5 +2,7 @@
     <string name="app_name">TradeMeProject</string>
     <string name="rent_rate">Rent per week</string>
     <string name="dlg_title">custom dialog title</string>
+    <string name="location_dummy_text">Mission Bay, Auckland City, Auckland</string>
+    <string name="dummy_description">4 bedroom house with 4 bathrooms. Modern contemporary house which has a separate large one bedroom and bathroom. Separate kitchen, dining and lounge area for flatmates. Owner/flatmate lives in separate area upstairs. The house has underfloor heating and all utilities, including fibre internet are included. Free off street parking available. Smokers OK, no pets</string>
 
 </resources>

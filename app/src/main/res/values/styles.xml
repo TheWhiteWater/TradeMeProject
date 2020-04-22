@@ -58,6 +58,26 @@
         <item name="android:layout_weight">1</item>
     </style>
 
+    <style name="detail_text_value">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:textSize">@dimen/large_text_size</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="detail_text_tag">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/large_text_size</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="detail_text_container">
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
 
 
 </resources>

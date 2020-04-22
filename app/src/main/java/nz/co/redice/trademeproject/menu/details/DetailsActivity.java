@@ -1,13 +1,18 @@
 package nz.co.redice.trademeproject.menu.details;
 
-import androidx.fragment.app.Fragment;
+import android.os.Bundle;
 
-import nz.co.redice.trademeproject.menu.common.SingleFragmentActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class DetailsActivity extends SingleFragmentActivity {
+import nz.co.redice.trademeproject.R;
+
+public class DetailsActivity extends AppCompatActivity {
+
 
     @Override
-    protected Fragment createFragment() {
-        return new DetailsFragment();
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_details);
     }
 }

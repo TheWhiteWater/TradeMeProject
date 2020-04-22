@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/image" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+<LinearLayout style="@style/detail_text_container">
+
+                    <TextView
+                        android:id="@+id/location_tag"
+                        style="@style/detail_text_tag"
+                        android:text="Location:" />
+
+
+                    <TextView
+                        android:id="@+id/location_value"
+                        style="@style/detail_text_value"
+                        android:text="@string/location_dummy_text" />
+
+                </LinearLayout>
+
+<LinearLayout style="@style/detail_text_container">
+
+                    <TextView
+                        android:id="@+id/rent_rate"
+                        style="@style/detail_text_tag"
+                        android:text="RentPerWeek:" />
+
+
+                    <TextView
+                        android:id="@+id/rent_rate_value"
+                        style="@style/detail_text_value"
+                        android:text="$120 pw" />
+                </LinearLayout>
+
+<LinearLayout style="@style/detail_text_container">
+
+                    <TextView
+                        android:id="@+id/availability_tag"
+                        style="@style/detail_text_tag"
+                        android:text="Available:" />
+
+
+                    <TextView
+                        style="@style/detail_text_value"
+                        android:text="Tue 28 Apr" />
+
+                </LinearLayout>
+
+<LinearLayout style="@style/detail_text_container">
+
+                    <TextView
+                        style="@style/detail_text_tag"
+                        android:text="Current flatmates:" />
+
+
+                    <TextView
+                        style="@style/detail_text_value"
+                        android:text="1 existing flatmate. Self employed owner/flat­mate lives in separate area." />
+                </LinearLayout>
+
+<LinearLayout style="@style/detail_text_container">
+
+                    <TextView
+                        style="@style/detail_text_tag"
+                        android:text="Couples OK:" />
+
+                    <TextView
+                        style="@style/detail_text_value"
+                        android:text="No" />
+
+                </LinearLayout>
+
+<LinearLayout style="@style/detail_text_container">
+
+                    <TextView
+                        style="@style/detail_text_tag"
+                        android:text="Ideal flatmate:" />
+
+                    <TextView
+                        style="@style/detail_text_value"
+                        android:text="Single profession­al" />
+
+                </LinearLayout>
+
+<LinearLayout style="@style/detail_text_container">
+
+                    <TextView
+                        style="@style/detail_text_tag"
+                        android:text="Parking:" />
+
+                    <TextView
+                        style="@style/detail_text_value"
+                        android:text="	Free off street" />
+
+                </LinearLayout>
+
+                <LinearLayout style="@style/detail_text_container">
+
+                    <TextView
+                        style="@style/detail_text_tag"
+                        android:text="Description:" />
+
+                    <TextView
+                        style="@style/detail_text_value"
+                        android:text="@string/dummy_description" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+</FrameLayout>
