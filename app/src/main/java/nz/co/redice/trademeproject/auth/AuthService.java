@@ -147,6 +147,7 @@ public class AuthService implements AuthContract.Model {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         setResponseLog("Stage3 ", response);
                         extractTokens(response);
+
                         makeTestRequest();
                     }
 

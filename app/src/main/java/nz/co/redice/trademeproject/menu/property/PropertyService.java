@@ -1,56 +1,56 @@
 package nz.co.redice.trademeproject.menu.property;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-
-import nz.co.redice.trademeproject.auth.AuthConstants;
-import nz.co.redice.trademeproject.models.properties.Listing;
-import nz.co.redice.trademeproject.networking.NetworkClient;
+import nz.co.redice.trademeproject.models.properties.Property;
 import nz.co.redice.trademeproject.networking.TradeMeApi;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PropertyService implements PropertyContract.Model {
-    private TradeMeApi mTradeMeApi;
     private PropertyContract.Presenter mPresenter;
-    private Context mContext;
-    private Listing mListingResult;
+    private List<Property> mResult = new ArrayList<>();
+    private Retrofit mRetrofit;
 
     public PropertyService(PropertyContract.Presenter presenter) {
-        mTradeMeApi = NetworkClient.getRetrofitBuilder()
-                .build()
-                .create(TradeMeApi.class);
+
+        HttpLoggingInterceptor connectionLogger = new HttpLoggingInterceptor()
+                .setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+                .addInterceptor(connectionLogger);
+
+        mRetrofit = new Retrofit.Builder()
+                .baseUrl("https://api.tmsandbox.co.nz/v1/")
+                .client(httpClient.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
         mPresenter = presenter;
-        mContext = mPresenter.provideContext();
     }
 
     @Override
-    public Listing requestPropertyList() {
-        mTradeMeApi.getProperties(getAuthHeader()).enqueue(new Callback<Listing>() {
-            @Override
-            public void onResponse(Call<Listing> call, Response<Listing> response) {
-                if (response.isSuccessful()) {
-                    mListingResult = new Listing(response.body().getList(),
-                            response.body().getFoundCategories());
-                    Log.d("App", "onResponse: " + mListingResult.getList().size());
-                }
-            }
+    public List<Property> requestPropertyList() {
+        mRetrofit.create(TradeMeApi.class).getProperties(mPresenter.getAuthHeader())
+                .enqueue(new Callback<List<Property>>() {
+                    @Override
+                    public void onResponse(Call<List<Property>> call, Response<List<Property>> response) {
+                        mResult.addAll(response.body());
+                    }
 
-            @Override
-            public void onFailure(Call<Listing> call, Throwable t) {
-                Log.d("App", "onFailure: Something went wrong" );
-            }
-        });
-        return mListingResult;
+                    @Override
+                    public void onFailure(Call<List<Property>> call, Throwable t) {
+
+                    }
+                });
+        return mResult;
     }
 
-    @NotNull
-    public String getAuthHeader() {
-        SharedPreferences pref = mContext.getSharedPreferences("MyPref", 0);
-        return pref.getString(AuthConstants.HEADER_KEY, "");
-    }
+
 }

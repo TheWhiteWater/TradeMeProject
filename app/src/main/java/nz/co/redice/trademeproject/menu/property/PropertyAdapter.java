@@ -16,7 +16,7 @@ import nz.co.redice.trademeproject.models.properties.Property;
 
 class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.Holder> {
 
-    private List <Property> showList = new ArrayList<>();
+    private List<Property> showList = new ArrayList<>();
 
 
     @NonNull
@@ -52,7 +52,7 @@ class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.Holder> {
             nameView = itemView.findViewById(R.id.item_name);
         }
 
-        public void bind(Property property) {
+        void bind(Property property) {
             nameView.setText(property.getTitle());
         }
     }

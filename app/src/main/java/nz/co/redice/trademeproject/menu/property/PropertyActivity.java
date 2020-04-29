@@ -23,6 +23,7 @@ public class PropertyActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property);
+
         mAdapter = new PropertyAdapter();
         mRecyclerView = findViewById(R.id.property_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -36,7 +37,7 @@ public class PropertyActivity extends AppCompatActivity
 
     @Override
     public Context getContext() {
-        return getContext();
+        return getApplicationContext();
     }
 
     @Override

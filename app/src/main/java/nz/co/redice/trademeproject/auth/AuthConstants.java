@@ -13,4 +13,14 @@ public class AuthConstants {
 
     public static final String REQUEST_HEADER = "REQUEST_HEADER";
     public static final String VERIFIER_KEY = "oauth_verifier";
+
+    private static String authHeader;
+
+    public  String getAuthHeader() {
+        return authHeader;
+    }
+
+    public void setAuthHeader(String authHeader) {
+        this.authHeader = authHeader;
+    }
 }

@@ -27,9 +27,7 @@ android {
     viewBinding {
         enabled = true
     }
-
 }
-def rxBindingVersion = "3.1.0"
 
 dependencies {
 
@@ -53,20 +51,5 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha02'
 
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
-    implementation 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
-
-    implementation "com.jakewharton.rxbinding3:rxbinding:$rxBindingVersion"
-    implementation "com.jakewharton.rxbinding3:rxbinding-core:$rxBindingVersion"
-    implementation "com.jakewharton.rxbinding3:rxbinding-appcompat:$rxBindingVersion"
-    implementation "com.jakewharton.rxbinding3:rxbinding-drawerlayout:$rxBindingVersion"
-    implementation "com.jakewharton.rxbinding3:rxbinding-leanback:$rxBindingVersion"
-    implementation "com.jakewharton.rxbinding3:rxbinding-recyclerview:$rxBindingVersion"
-    implementation "com.jakewharton.rxbinding3:rxbinding-slidingpanelayout:$rxBindingVersion"
-    implementation "com.jakewharton.rxbinding3:rxbinding-swiperefreshlayout:$rxBindingVersion"
-    implementation "com.jakewharton.rxbinding3:rxbinding-viewpager:$rxBindingVersion"
-    implementation "com.jakewharton.rxbinding3:rxbinding-viewpager2:$rxBindingVersion"
-    implementation "com.jakewharton.rxbinding3:rxbinding-material:$rxBindingVersion"
 
 }
