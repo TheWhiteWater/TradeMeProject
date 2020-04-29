@@ -1,4 +1,4 @@
-package nz.co.redice.trademeproject.auth.mvp;
+package nz.co.redice.trademeproject.auth;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import nz.co.redice.trademeproject.R;
-import nz.co.redice.trademeproject.menu.SearchMenuActivity;
+import nz.co.redice.trademeproject.menu.property.PropertyActivity;
 
 public class AuthActivity extends AppCompatActivity implements AuthContract.View {
 
@@ -37,7 +37,7 @@ public class AuthActivity extends AppCompatActivity implements AuthContract.View
 
     @Override
     public void onAuthenticationComplete() {
-        Intent intent = new Intent(this, SearchMenuActivity.class);
+        Intent intent = new Intent(this, PropertyActivity.class);
         startActivity(intent);
         finish();
     }
