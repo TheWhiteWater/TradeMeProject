@@ -6,6 +6,7 @@ import android.util.Log;
 import org.jetbrains.annotations.NotNull;
 
 import nz.co.redice.trademeproject.auth.AuthConstants;
+import nz.co.redice.trademeproject.models.properties.Listing;
 
 public class PropertyPresenter implements PropertyContract.Presenter {
 
@@ -46,8 +47,13 @@ public class PropertyPresenter implements PropertyContract.Presenter {
     @Override
     public void onSearchButtonPressed() {
         mModel = new PropertyService(this);
-        mView.updateUi(mModel.requestPropertyList().getList());
+        mModel.requestPropertyList();
 
+    }
+
+    @Override
+    public void onRespondReady(Listing listing) {
+        mView.updateUi(listing.getList());
     }
 
 

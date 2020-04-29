@@ -13,6 +13,7 @@ public interface PropertyContract {
         String getAuthHeader();
         void attachView(PropertyContract.View view);
         void onSearchButtonPressed();
+        void onRespondReady(Listing listing);
     }
 
     interface View {
@@ -21,6 +22,6 @@ public interface PropertyContract {
     }
 
     interface Model {
-        Listing requestPropertyList();
+        void requestPropertyList();
     }
 }

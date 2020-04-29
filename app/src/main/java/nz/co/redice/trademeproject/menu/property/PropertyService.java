@@ -3,7 +3,6 @@ package nz.co.redice.trademeproject.menu.property;
 import android.util.Log;
 
 import nz.co.redice.trademeproject.models.properties.Listing;
-import nz.co.redice.trademeproject.models.properties.Property;
 import nz.co.redice.trademeproject.networking.TradeMeApi;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -36,19 +35,17 @@ public class PropertyService implements PropertyContract.Model {
     }
 
     @Override
-    public Listing requestPropertyList() {
+    public void requestPropertyList() {
         mRetrofit.create(TradeMeApi.class)
                 .getProperties(mPresenter.getAuthHeader())
                 .enqueue(new Callback<Listing>() {
                     @Override
                     public void onResponse(Call<Listing> call, Response<Listing> response) {
                         if (response.isSuccessful()) {
-                            response.body().getList();
-                            for (Property p : response.body().getList()) {
-                                Log.d("App", "onResponse: " + p.getTitle());
-                            }
+                            Log.d("App", "onResponse: " + response.body().getList().size());
+                            mPresenter.onRespondReady(response.body());
                         }
-
+                        Log.d("App", "onResponse: Something wrong");
                     }
 
                     @Override
@@ -56,8 +53,9 @@ public class PropertyService implements PropertyContract.Model {
 
                     }
                 });
-        return mResult;
     }
+
+
 
 
 }

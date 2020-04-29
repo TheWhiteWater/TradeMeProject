@@ -2,6 +2,7 @@ package nz.co.redice.trademeproject.menu.property;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,5 +44,8 @@ public class PropertyActivity extends AppCompatActivity
     @Override
     public void updateUi(List<Property> properties) {
         mAdapter.updateListing(properties);
+        for (int i = 0; i < properties.size(); i++) {
+            Log.d("App", "updateUi: "+ properties.get(i).getTitle());
+        }
     }
 }
