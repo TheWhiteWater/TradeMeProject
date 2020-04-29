@@ -9,13 +9,13 @@
 
 
     <TextView
-        android:id="@+id/item_textview"
+        android:id="@+id/item_name"
         android:textColor="@color/primary_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:textSize="@dimen/large_text_size"
-        tools:text="Location" />
+        tools:text="Name" />
 
 </LinearLayout>
 

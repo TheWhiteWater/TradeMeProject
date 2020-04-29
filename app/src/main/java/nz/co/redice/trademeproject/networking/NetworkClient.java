@@ -20,7 +20,6 @@ public class NetworkClient {
         mRetrofit = new Retrofit.Builder()
                 .client(httpClient.build())
                 .addConverterFactory(GsonConverterFactory.create());
-
     }
 
     public static Retrofit.Builder getRetrofitBuilder() {

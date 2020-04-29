@@ -67,7 +67,7 @@ public class AuthService implements AuthContract.Model {
 
     /**
      * Stage 1.
-     * Generates a temporary token by making a request to this
+     * Generates a temporary token by making a request to
      * URL: https://secure.trademe.co.nz/Oauth/RequestToken?scope=<scope>.
      * The request is a valid OAuth request (with a consumer key,
      * a signature and optionally a callback, but without a token).

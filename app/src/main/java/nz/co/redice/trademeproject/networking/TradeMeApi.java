@@ -1,15 +1,12 @@
 package nz.co.redice.trademeproject.networking;
 
-import java.util.Map;
-
-import nz.co.redice.trademeproject.models.search.SearchResult;
+import nz.co.redice.trademeproject.models.properties.Listing;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 
 public interface TradeMeApi {
 
@@ -29,10 +26,9 @@ public interface TradeMeApi {
             @Header("Authorization") String param
     );
 
-    @GET("Search/Property/Rental.json")
-    Call<SearchResult> getSearchResults(
-            @Header("Authorization") String param,
-            @QueryMap Map<String, String> map
+    @GET("https://api.trademe.co.nz/v1/Search/Property/CommercialSale.json")
+    Call<Listing> getProperties(
+            @Header("Authorization") String param
     );
 
 }
