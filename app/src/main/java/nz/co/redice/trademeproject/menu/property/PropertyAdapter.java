@@ -54,6 +54,7 @@ class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.Holder> {
 
         void bind(Property property) {
             nameView.setText(property.getTitle());
+//            Log.d("App", "bind: " + property.getTitle());
         }
     }
 }

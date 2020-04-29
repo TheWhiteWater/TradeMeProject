@@ -65,6 +65,10 @@ public class Property {
     @Expose
     private String bestContactTime;
 
+    public Property(String title) {
+        this.title = title;
+    }
+
     public Property(Long listingId, String title, String category, Float startPrice, Boolean hasGallery, Long regionId, String region, Long suburbId, String suburb, String priceDisplay, Long totalReviewCount, Long positiveReviewCount, String shortDescription, List<String> photoUrls, String address, String district, Long bathrooms, Long bedrooms, String bestContactTime) {
         this.listingId = listingId;
         this.title = title;

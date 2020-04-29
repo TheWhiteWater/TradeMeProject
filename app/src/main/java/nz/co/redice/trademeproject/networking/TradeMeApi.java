@@ -1,8 +1,6 @@
 package nz.co.redice.trademeproject.networking;
 
-import java.util.List;
-
-import nz.co.redice.trademeproject.models.properties.Property;
+import nz.co.redice.trademeproject.models.properties.Listing;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -29,7 +27,7 @@ public interface TradeMeApi {
     );
 
     @GET("Search/Property/CommercialSale.json")
-    Call <List<Property>> getProperties(
+    Call <Listing> getProperties(
             @Header("Authorization") String param
     );
 

@@ -1,6 +1,5 @@
 package nz.co.redice.trademeproject.menu.property;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -28,7 +27,6 @@ public class PropertyPresenter implements PropertyContract.Presenter {
     public String getAuthHeader() {
         SharedPreferences pref = mView.getContext().getSharedPreferences(AuthConstants.REQUEST_HEADER, 0);
         String header = pref.getString(AuthConstants.HEADER_KEY, "");
-        Log.d("App", "getAuthHeader: " + header);
         if (header.isEmpty())
             getNewAuthentication();
         return header;
@@ -43,17 +41,13 @@ public class PropertyPresenter implements PropertyContract.Presenter {
         mView = view;
     }
 
-    @Override
-    public Context provideContext() {
-        return mView.getContext();
-    }
 
 
     @Override
     public void onSearchButtonPressed() {
-        getAuthHeader();
         mModel = new PropertyService(this);
-        mView.updateUi(mModel.requestPropertyList());
+        mView.updateUi(mModel.requestPropertyList().getList());
+
     }
 
 
